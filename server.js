@@ -1,5 +1,8 @@
 import express from 'express'
 import pg from 'pg'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const app = express()
 
@@ -29,13 +32,7 @@ app.get('/review', (req,res) => {
     
 })
 
-const client = new Client({
-    user: '',
-    password: '',
-    database: '',
-    host: '',
-    port:''
-})
+const client = new Client()
 
 connect()
 
