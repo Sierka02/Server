@@ -12,25 +12,21 @@ app.listen(3001, () => {
     console.log('server is running...');
 })
 
-app.get('/API', (req,res) => {
+//get all movies
+app.get('/', (req,res) => {
 
 })
 
-app.get('/user', (req,res) => {
-    
+// add new movie
+app.get('/', (req,res) => {
+
 })
 
-app.get('/genre', (req,res) => {
-    
+// get movie by id
+app.get('/', (req,res) => {
+
 })
 
-app.get('/movie', (req,res) => {
-    
-})
-
-app.get('/review', (req,res) => {
-    
-})
 
 const client = new Client()
 
