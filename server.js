@@ -1,11 +1,14 @@
 import express from 'express'
 import { pgPool } from './pg_connection.js';
 
+
 const app = express()
+app.use(express.urlencoded({extended:true}))
 
 app.listen(3001, () => {
     console.log('server is running...');
 })
+
 
 //get all movies
 app.get('/movies', async (req,res) => {
@@ -36,14 +39,32 @@ app.get('/movies/:id', async (req,res) => {
 // add new movies
 app.post('/movies', async (req,res) => {
     
-    const id = req.body.id
     const name = req.body.name
-    const year = req.body.year
+    const release_year = req.body.release_year
     const genre = req.body.genre
     
     try {
         await pgPool.query(
-            'INSERT INTO movie VALUES ($1,$2,$3,$4)', [id, name, year, genre])
+            'INSERT INTO movie (name, release_year, genre) VALUES ($1,$2,$3)', [name, release_year, genre])
+        res.end();
+    } catch (error) {
+       res.status(400).json({error: error.message})
+    }
+})
+
+
+
+// add new user
+app.post('/user', async (req,res) => {
+
+    const name = req.body.name
+    const username = req.body.username
+    const password = req.body.password
+    const birth_year = req.body.birth_year
+    
+    try {
+        await pgPool.query(
+            'INSERT INTO user_profile (name, username, password, birth_year) VALUES ($1,$2,$3,$4)', [name, username, password, birth_year])
         res.end();
     } catch (error) {
        res.status(400).json({error: error.message})
@@ -51,19 +72,29 @@ app.post('/movies', async (req,res) => {
 
 })
 
-// add new user
-app.post('/user', async (req,res) => {
-
-
-
-
-})
-
 // add new genre
 app.post('/genre', async (req,res) => {
 
+const name = req.body.name
+
+try {
+    await pgPool.query(
+        'INSERT INTO genre (name) VALUES ($1)', [name])
+    res.end()
+} catch (error) {
+    res.status(400).json({error: error.message})
+}
+
 
 })
+
+
+//add a review
+app.post('/review', async (req,res) => {
+
+
+})
+
 
 //remove movies by id
 app.post('/removeMovie/:id', async (req,res) => {
@@ -71,9 +102,3 @@ app.post('/removeMovie/:id', async (req,res) => {
 
 })
 
-//add a review
-
-app.post('/review', async (req,res) => {
-
-
-})
