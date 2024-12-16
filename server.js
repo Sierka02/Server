@@ -31,6 +31,8 @@ app.get('/movies/:id', async (req,res) => {
 
 })
 
+
+
 // add new movies
 app.post('/movies', async (req,res) => {
     
@@ -46,6 +48,32 @@ app.post('/movies', async (req,res) => {
     } catch (error) {
        res.status(400).json({error: error.message})
     }
+
+})
+
+// add new user
+app.post('/user', async (req,res) => {
+
+
+
+
+})
+
+// add new genre
+app.post('/genre', async (req,res) => {
+
+
+})
+
+//remove movies by id
+app.post('/removeMovie/:id', async (req,res) => {
+
+
+})
+
+//add a review
+
+app.post('/review', async (req,res) => {
 
 
 })
