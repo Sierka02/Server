@@ -21,6 +21,7 @@ app.get('/movies', async (req,res) => {
     }
 })
 
+
 // get movie by id
 app.get('/movies/:id', async (req,res) => {
     const { id } = req.params
@@ -92,6 +93,17 @@ try {
 //add a review
 app.post('/review', async (req,res) => {
 
+    const movie_id = req.body.movie_id
+    const user_id = req.body.user_id
+    const rev = req.body.rev
+    
+    try {
+        await pgPool.query(
+            'INSERT INTO review (movie_id, user_id, rev) VALUES ($1,$2,$3)', [movie_id, user_id, rev])
+        res.end();
+    } catch (error) {
+       res.status(400).json({error: error.message})
+    }
 
 })
 
@@ -99,6 +111,14 @@ app.post('/review', async (req,res) => {
 //remove movies by id
 app.post('/removeMovie/:id', async (req,res) => {
 
+    const { id } = req.params
+    
+    try {
+        const result = await pgPool.query('DELETE FROM movie WHERE id = $1', [id])
+        res.json(result.rows)
+    } catch (error) {
+        res.status(400).json ({error: error.message})
+    }
 
 })
 
